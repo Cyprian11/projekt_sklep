@@ -5,6 +5,13 @@
     <style>
         .header{
         background-color:powderblue;
+        
+        }
+        .body{
+            background-color:aliceblue;
+            width:100%;
+            height:100%;
+            text-align:center;
         }
     </style>
     
@@ -14,50 +21,102 @@
     <body>
     <div class="header">
     <?php
-
+        session_start();
         $con = new mysqli("127.0.0.1","root","","projekt_sklep");
+        echo '<form method="POST">';
         if(isset($_POST['login'])&&strlen($_POST['login'])){
+        
+            $login="";
+            $password="";
+            $res=$con->query("SELECT * FROM users");
+            $offers=$res->fetch_all(MYSQLI_ASSOC);
+            $res->fetch_all();
+            echo"<center><b><h1>ZALOGUJ SIĘ</h1></b></center>";
         }
-      
-            
-        $login="";
-        $password="";
-        $res=$con->query("SELECT * FROM users");
-        $offers=$res->fetch_all(MYSQLI_ASSOC);
-        $res->fetch_all();
-        echo"<center><b><h1>ZALOGUJ SIĘ</h1></b></center>";
     ?>
      <br>
 
-    <center>
-    <form method="POST">
-        
-     Login:     <input type="text" name="login" placeholder="Podaj login"value="<?php echo $login;?>">
-     Password:  <input type="text" name="password" placeholder="Podaj hasło"value="<?php echo $password;?>">
-                <input type=submit value="ZALOGUJ">
-    </form>
-    </center>
-    <?php
-    // print_r($_POST)
     
-    // function logowanie($login, $haslo) {
-        
-    //     $mysqli->select_db("projekt_sklep",$con);
-    //     $wynik=mysql_query("SELECT * FROM users WHERE login='$login' AND password='$password'",$con);
-    //     if (mysql_num_rows($wynik)==1) {
-    //         mysql_close($con); return true;
-    //       } 
-    //         else {
-    //         mysql_close($con); return false;
-    //       }
-    //     }
-    // if (logowanie($login,$password)) {
-    //         echo "zalogowano";
-    //         }
-    //     else{
-    //         echo"nie zalogowano";
-    //         }
+    
+                
+               
+    </form>
+    <?php
+    echo'<form method="POST" action=login.php>';
+    echo '<center>
+    <div class="body">
+
+    <h1>Logowanie:</h1><br> 
+
+    <label>Login: <input name="login"></label><br>
+
+    Hasło: <input name="password" type="password"><br>
+
+    <input type="submit" value="Zaloguj">';
+    echo '</form>';
+        if($_POST!=NULL)
+        {
+            for($i=0;$i<count($cos);$i++)
+            {
+                if($_POST['login']==$cos[$i][1] && $_POST['password']==$cos[$i][2])
+                {
+                    $_SESSION["login"] = $_POST['login'];
+                    $_SESSION["id"] = $i;
+                    echo 'udalo sie zalogowac';
+                    header("Location: login.php");
+                }
+            }
+        }
+        echo '</form>';
+        echo '<form action="rejestracja.php"><button>Rejestracja</button></form></center></div>';
     ?>
+    </center>
+
+        <div class="body">
+            <h1>WITAJ!!!</h1>
+            <?php
+                
+                
+                //  if(isset($_POST['zaloguj']))
+                // $sql= 'SELECT login,password FROM users WHERE login="'.$_POST['login'].'" AND password="'.$_POST['password'];
+                // if($log->login($username, $_POST['password'])) {
+      
+                //     session_start();
+                    
+                //     $_SESSION['zaloguj'] = 1;
+                //     $_SESSION['login'] = $login;
+                    
+                //     echo'zalogowano';
+                    
+                //     exit;
+                    
+                //    }
+                   
+                //    else {
+                   
+                //     echo '<p>Błędne dane logowania.</p>';
+                    
+                //    }
+                // print_r($_POST);
+
+
+                // if(isset($_POST['zaloguj'])){
+
+                // }
+                //     if(mysql_num_rows(mysql_query("SELECT login,password FROM users WHERE login = '".$login."' AND haslo = '".md5($password)."';")) > 0)
+                    // {
+                    //     $_SESSION['zalogowany'] = true;
+                    //     $_SESSION['login'] = $login;
+                    //     }
+                    // { else echo "Wpisano złe dane.";
+                    // }
+
+
+            ?>
+        </div>
+
+    
+   
   
  
     

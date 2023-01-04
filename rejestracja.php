@@ -1,42 +1,42 @@
 <html>
+
     <head>
-    <style>
-        .header{
-            background-color:powderblue;
         
-        }
-        .body{
-            background-color:powderblue;
-            width:100%;
-            height:100%;
-            text-align:center;
-        }
-    </style>
-</head>
-<body>
-<div class="body">
-    <?php
-    
-    $con = new mysqli("127.0.0.1","root","","projekt_sklep");
-        echo '<form method="POST">';
-        $res = $con->query("SELECT * FROM users");
-        $cos = $res->fetch_all();
+        <link rel="stylesheet" href="style.css">
 
-        echo '<center><div class="d1"><h1>Rejestracja:</h1><br> Login: <input name="login"><br> Hasło: <input name="password" type="password"><br><input type="submit">';
-        if($_POST!=NULL)
-        {
-            if($_POST['login']!="" && $_POST['password']!="")
-            {
-                $sqlquery = "INSERT INTO `users` VALUES ('', '".$_POST['login']."', '".$_POST['password']."', '0' );";
-                $con->query($sqlquery);
-                header('location: index.php');
+   </head>
+
+    <body>
+
+        <div class="f1">
+            <h1>REJESTRACJA</h1>
+
+            <form method="POST">
+            login <input type="text" name="login"><br>
+            haslo <input type="password" name="haslo"><br>
+            e-mail <input type="text" name="e-mail"><br>
+            <input type="submit" name="submit">
+            </form>
+            <a href="index.php"><input type="button" name="submit2" value="Logowanie"></a>
+            
+
+        </div>
+         <?php
+            
+            $con = new mysqli("127.0.0.1","root","","ZSPSHOP");
+            print_r($_POST);
+            if (isset($_POST["login"])){
+                
+                $sql="INSERT INTO users (`login`,`password`,`e-mail`) VALUES ('".$_POST['login']."','".$_POST['haslo']."','".$_POST['e-mail']."' ) ";
+                $res = $con->query($sql);
             }
-        }
-        echo '</form>';
+            // $offers = $res->fetch_array(MYSQLI_ASOC);
+            // $res->fetch_all();
 
-        echo '<form action="index.php"><button>Logowanie</button></form></center></div>';
-    ?>
-    </div>
+         ?>
+
     </body>
 
-    </html>
+    
+
+</html>
